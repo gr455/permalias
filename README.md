@@ -1,5 +1,5 @@
 # permalias
-Add an alias to linux with one command
+Add an alias to bash permanently with one command
 
 # Usage
 
