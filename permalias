@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [[ -n $1 && -n $2 ]]
+then
+
+	if [[ $1 =~ ^[A-Za-z_-]+$ && $2 =~ ^[A-Za-z_\'[:space:]-]+$ ]]
+	then
+		flag=0
+
+		if [[ -n $3 ]]
+		then
+			bashrcpath="/home/$3/.bashrc"
+
+		else	
+			bashrcpath="/home/$(whoami)/.bashrc"
+
+		fi
+
+		if [ ! -f $bashrcpath ]; then
+			echo "bashrc file not found. Try using your username"
+			echo "permalias <alias> <command> <user>"
+			exit 1
+		fi
+
+		input=$bashrcpath
+		while IFS= read -r line
+		do
+			if [[ $line =~ "alias ${1}" ]]
+			then
+				flag=1
+				break
+			fi
+			done < "$input"
+
+		if [ $flag = 0 ]
+		then
+			echo alias $1=\"$2\" >> $bashrcpath
+			echo created alias $1=\"$2\"
+			source ~/.bashrc
+		else
+			echo "alias $1 already exists. Aborting"
+			exit 1
+		fi
+	else
+		echo "Invalid name"
+		echo "For alias, only use aphabetic characters, underscore and hyphen"
+		echo "For command, do not use double quotes"
+	fi
+else
+	echo "usage: permalias <alias> <command> <user>"
+fi
