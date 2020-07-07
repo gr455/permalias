@@ -17,4 +17,4 @@ Add an alias to bash permanently with one command
 
 2. `permalias hello "echo 'hello world'"`
 
-3. `permalias hello "echo 'hello world'" grass` (if I want to add the alias for 'grass' user. user argument is also needed if running as root)
+3. `permalias hello "echo 'hello world'" grass` (if I want to add the alias for 'grass' user)
